@@ -4,4 +4,5 @@ Types::IngredientType = GraphQL::ObjectType.define do
 
   field :id, types.Int
   field :name, types.String
+  field :description, types.String
 end
