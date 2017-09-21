@@ -1,4 +1,4 @@
 FoodleSchema = GraphQL::Schema.define do
-  # mutation(Types::MutationType)
-  query(Types::QueryType)
+  mutation MutationType
+  query Types::QueryType
 end

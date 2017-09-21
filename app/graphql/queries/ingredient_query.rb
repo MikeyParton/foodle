@@ -9,6 +9,7 @@ Queries::IngredientQuery = GraphQL::ObjectType.define do
   end
 
   field :ingredients do
+    argument :query, types.String
     type types[Types::IngredientType]
     description "Some ingredients"
     resolve -> (obj, args, ctx) {

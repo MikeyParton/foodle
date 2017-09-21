@@ -7,4 +7,15 @@ Queries::ProductQuery = GraphQL::ObjectType.define do
       Product.find_by_id(args[:id])
     }
   end
+
+  field :products do
+    argument :query, types.String
+    type types[Types::ProductType]
+    description "Some products"
+    resolve -> (obj, args, ctx) {
+      products = Product.all
+      products = products.query(args[:query]) if args[:query].present?
+      products
+    }
+  end
 end
