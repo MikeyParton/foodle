@@ -22,9 +22,18 @@ gem 'pg_search'
 gem 'koala'
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'faker'
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'rspec-rails'
+  gem "better_errors"
+  gem 'guard'
+  gem 'guard-rspec', require: false
+end
+
+group :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -35,5 +44,3 @@ group :development do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem 'graphiql-rails', group: :development
