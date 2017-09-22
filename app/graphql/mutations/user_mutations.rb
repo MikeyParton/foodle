@@ -8,13 +8,10 @@ module UserMutations
     return_field :user, Types::UserType
     return_field :errors, types[types.String]
 
-    resolve -> (obj, args, ctx) {
+    resolve lambda(_, args, _) {
       user = User.new(args.to_h)
-      if user.save
-        return { user: user }
-      else
-        return { errors: user.errors.to_a }
-      end
+      return { user: user } if user.save
+      { errors: user.errors.to_a }
     }
   end
 end

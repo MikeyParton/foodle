@@ -22,18 +22,22 @@ gem 'pg_search'
 gem 'koala'
 
 group :development, :test do
-  gem 'faker'
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rspec-rails'
   gem "better_errors"
   gem 'guard'
   gem 'guard-rspec', require: false
+
+  gem 'factory_girl_rails'
+  gem 'ffaker'
+  gem "seedbank"
 end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
@@ -42,5 +46,3 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
