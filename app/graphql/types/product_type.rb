@@ -5,6 +5,7 @@ Types::ProductType = GraphQL::ObjectType.define do
   field :id, types.Int
   field :name, types.String
   field :description, types.String
+  field :barcode, types.String
 
   field :ingredients do
     type types[Types::IngredientType]

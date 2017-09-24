@@ -8,6 +8,7 @@ module SocialLogin
       ActiveRecord::Base.transaction do
         identity = Identity.for(auth_hash)
         user = find_or_create_user(identity)
+        user.regenerate_token
         # Link user with identity if it is new
         user.identities << identity unless user.identities.include?(identity)
         user

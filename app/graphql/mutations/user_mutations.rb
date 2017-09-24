@@ -1,17 +1,12 @@
-module UserMutations
+Mutations::UserMutations = GraphQL::ObjectType.define do
+  field :facebook_login do
+    name 'FacebookLogin'
+    type Types::UserType
+    argument :token, !types.String
 
-  Register = GraphQL::Relay::Mutation.define do
-    name 'RegisterUser'
-
-    input_field :name, !types.String
-    input_field :email, !types.String
-    return_field :user, Types::UserType
-    return_field :errors, types[types.String]
-
-    resolve lambda(_, args, _) {
-      user = User.new(args.to_h)
-      return { user: user } if user.save
-      { errors: user.errors.to_a }
+    resolve ->(_obj, args, ctx) {
+      ctx[:show_token] = true
+      return SocialLogin::Facebook.new(args[:token]).process
     }
   end
 end
