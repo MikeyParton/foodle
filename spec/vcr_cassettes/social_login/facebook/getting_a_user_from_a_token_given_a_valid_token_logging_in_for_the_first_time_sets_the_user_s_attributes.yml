@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me?access_token=EAACEdEose0cBAHpiThNSAZAQvcUZBzwnSZBzxmRbT57EzCtlmFqPBa2JHe6lJzfHHXQAI2K9Sbt9WaVoiLFZARun7np0TFV5a6fsD66ZBjtUTSeFZBOsZBtV2gBZAG0Kg74XCWbqEEsYv5OlZA73a5L46P7T8TRphacoHIBllZA9XNl23QCJpfKtKuMSQphNaSZCsUGZAtY7kOq79gZDZD&fields=id,first_name,last_name,email
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-App-Usage:
+      - '{"call_count":2,"total_cputime":2,"total_time":2}'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Trace-Id:
+      - BTXBa8vVzcl
+      Facebook-Api-Version:
+      - v2.4
+      Content-Type:
+      - application/json; charset=UTF-8
+      X-Fb-Rev:
+      - '3321398'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      Etag:
+      - '"265ac54880702dc184258ef4cc31df31d409d3ca"'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - "/rndPO6qVfcp1YUEpwcBQ/b0AlssxNR4qCXG/ij+3ihglNC3eUB7ZMWXYUVQXn3czewE4G1QS75CtRDuT+HOug=="
+      Date:
+      - Sun, 24 Sep 2017 08:02:32 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '107'
+    body:
+      encoding: UTF-8
+      string: '{"id":"1252969724730376","first_name":"Michael","last_name":"Parton","email":"mikeparton\u0040live.com.au"}'
+    http_version: 
+  recorded_at: Sun, 24 Sep 2017 21:07:56 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/1252969724730376/picture?access_token=EAACEdEose0cBAHpiThNSAZAQvcUZBzwnSZBzxmRbT57EzCtlmFqPBa2JHe6lJzfHHXQAI2K9Sbt9WaVoiLFZARun7np0TFV5a6fsD66ZBjtUTSeFZBOsZBtV2gBZAG0Kg74XCWbqEEsYv5OlZA73a5L46P7T8TRphacoHIBllZA9XNl23QCJpfKtKuMSQphNaSZCsUGZAtY7kOq79gZDZD&redirect=false&type=large
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-App-Usage:
+      - '{"call_count":2,"total_cputime":2,"total_time":2}'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Trace-Id:
+      - DZ/ue3SqyPk
+      Facebook-Api-Version:
+      - v2.4
+      Content-Type:
+      - application/json; charset=UTF-8
+      X-Fb-Rev:
+      - '3321398'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      Etag:
+      - '"c49acda3d6102d177fcdfb07ff36509725fac675"'
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - W/8EZyueMmPq3qOHnp9Sh7eLko2nPTPiOAIcIRwsbt5yQwzDuKSLiuOrjsg57HOQqnoepG0ZwI61CoygGrtzLA==
+      Date:
+      - Sun, 24 Sep 2017 08:02:33 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '184'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":{"is_silhouette":false,"url":"https:\/\/scontent.xx.fbcdn.net\/v\/t1.0-1\/p200x200\/14938268_1438531152840898_5919807328669120997_n.jpg?oh=1cfe70362848eeb60f17e58f25045a58&oe=5A4FCD44"}}'
+    http_version: 
+  recorded_at: Sun, 24 Sep 2017 21:07:56 GMT
+recorded_with: VCR 3.0.3

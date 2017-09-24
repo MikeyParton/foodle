@@ -1,11 +1,12 @@
 module SocialLogin
   class Facebook < Base
+
     def provider_api
       @graph ||= Koala::Facebook::API.new(@token)
     end
 
     def facebook_user
-      @facebook_user ||= provider_api.get_object('me?fields=id,first_name,last_name')
+      @facebook_user ||= provider_api.get_object('me?fields=id,first_name,last_name,email')
     end
 
     def avatar
