@@ -6,6 +6,6 @@ Types::UserType = GraphQL::ObjectType.define do
   field :last_name, types.String
   field :email, types.String
   field :token, types.String do
-    resolve ->(_obj, _args, ctx) { ctx[:show_token] ? 'token' : nil }
+    resolve ->(obj, _args, ctx) { ctx[:show_token] ? obj.token : nil }
   end
 end
