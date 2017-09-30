@@ -1,6 +1,6 @@
 Mutations::UserMutations = GraphQL::ObjectType.define do
   field :facebook_login do
-    name 'FacebookLogin'
+    name 'facebook_login'
     type Types::UserType
     argument :token, !types.String
 
