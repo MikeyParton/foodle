@@ -10,8 +10,6 @@ class Product < ApplicationRecord
       ingredients: [:name]
     },
     using: {
-      tsearch: {
-        any_word: true
-      }
+      tsearch: { prefix: true, any_word: true }
     }
 end
