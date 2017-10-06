@@ -1,0 +1,25 @@
+en:
+  options:
+    nutritional_info:
+      units:
+        energy:
+          - kj
+          - cal
+        protein:
+          - g
+        fat_total:
+          - g
+        fat_saturated:
+          - g
+        fat_trans_unsaturated:
+          - g
+        fat_polyunsaturated:
+          - g
+        carbohydrate_total:
+          - g
+        sugar_total:
+          - g
+        fibre_dietary:
+          - g
+        sodium:
+          - mg

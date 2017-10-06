@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004095743) do
+ActiveRecord::Schema.define(version: 20171005092951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,25 @@ ActiveRecord::Schema.define(version: 20171004095743) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "nutrition_information_rows", force: :cascade do |t|
+    t.bigint "nutrition_information_id"
+    t.integer "nutrient", default: 0, null: false
+    t.decimal "value", precision: 5, scale: 2
+    t.integer "units", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nutrition_information_id"], name: "index_nutrition_information_rows_on_nutrition_information_id"
+  end
+
+  create_table "nutrition_informations", force: :cascade do |t|
+    t.bigint "product_id"
+    t.integer "serving_value"
+    t.integer "serving_units", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_nutrition_informations_on_product_id"
   end
 
   create_table "product_ingredients", force: :cascade do |t|

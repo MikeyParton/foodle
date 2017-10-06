@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   belongs_to :brand
   has_many :product_ingredients
   has_many :ingredients, through: :product_ingredients
+  has_one :nutritional_info
 
   include PgSearch
 
