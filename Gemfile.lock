@@ -41,6 +41,7 @@ GEM
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (8.0.0)
+    awesome_print (1.8.0)
     better_errors (2.3.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -103,6 +104,7 @@ GEM
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
     hashdiff (0.3.6)
+    hashie (3.5.6)
     i18n (0.8.6)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -137,6 +139,9 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    openfoodfacts (0.4.1)
+      hashie (~> 3.4)
+      nokogiri (~> 1.7)
     pg (0.21.0)
     pg_search (2.1.0)
       activerecord (>= 4.2)
@@ -259,6 +264,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   better_errors
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
@@ -273,6 +279,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   koala
   listen (>= 3.0.5, < 3.2)
+  openfoodfacts
   pg (~> 0.18)
   pg_search
   pry

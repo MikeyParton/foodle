@@ -21,6 +21,7 @@ gem 'graphiql-rails'
 gem 'pg_search'
 gem 'enumerize'
 gem 'koala'
+gem 'openfoodfacts'
 
 group :development, :test do
   gem 'capybara', '~> 2.13'
@@ -29,7 +30,7 @@ group :development, :test do
   gem "better_errors"
   gem 'guard'
   gem 'guard-rspec', require: false
-
+  gem 'awesome_print', :require => 'ap'
   gem 'factory_girl_rails'
   gem 'ffaker'
   gem "seedbank"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005092951) do
+ActiveRecord::Schema.define(version: 20171007144209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,36 +33,33 @@ ActiveRecord::Schema.define(version: 20171005092951) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
-    t.text "string"
-    t.text "description"
+    t.string "string"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "nutrition_information_rows", force: :cascade do |t|
-    t.bigint "nutrition_information_id"
-    t.integer "nutrient", default: 0, null: false
-    t.decimal "value", precision: 5, scale: 2
-    t.integer "units", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["nutrition_information_id"], name: "index_nutrition_information_rows_on_nutrition_information_id"
-  end
-
-  create_table "nutrition_informations", force: :cascade do |t|
+  create_table "nutrients", force: :cascade do |t|
     t.bigint "product_id"
-    t.integer "serving_value"
-    t.integer "serving_units", default: 0, null: false
+    t.integer "name", default: 0, null: false
+    t.decimal "value", precision: 8, scale: 2
+    t.integer "unit", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_nutrition_informations_on_product_id"
+    t.index ["product_id"], name: "index_nutrients_on_product_id"
+  end
+
+  create_table "product_brands", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "brand_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_product_brands_on_brand_id"
+    t.index ["product_id"], name: "index_product_brands_on_product_id"
   end
 
   create_table "product_ingredients", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "ingredient_id"
-    t.decimal "quantity", precision: 8, scale: 2
-    t.integer "units"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_product_ingredients_on_ingredient_id"
@@ -71,12 +68,11 @@ ActiveRecord::Schema.define(version: 20171005092951) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "description"
+    t.decimal "serving_value", precision: 8, scale: 2
+    t.integer "serving_unit", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "barcode"
-    t.bigint "brand_id"
-    t.index ["brand_id"], name: "index_products_on_brand_id"
   end
 
   create_table "users", force: :cascade do |t|

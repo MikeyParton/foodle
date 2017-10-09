@@ -1,0 +1,39 @@
+en:
+  options:
+    units:
+      all_units:
+        g: g
+        mg: mg
+        µg: µg
+        ml: ml
+        kj: kJ
+      serving_units:
+        g: g
+        ml: ml
+      energy_units:
+        kj: kj
+        cal: cal
+      proteins_units:
+        g: g
+        mg: mg
+        ug: ug
+      fat_units:
+        g: g
+        mg: mg
+        ug: ug
+      carbohydrates_units:
+        g: g
+        mg: mg
+        ug: ug
+      sugars:
+        g: g
+        mg: mg
+        ug: ug
+      fiber:
+        g: g
+        mg: mg
+        ug: ug
+      sodium:
+        g: g
+        mg: mg
+        ug: ug

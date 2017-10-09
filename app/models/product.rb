@@ -1,8 +1,9 @@
 class Product < ApplicationRecord
-  belongs_to :brand
-  has_many :product_ingredients
+  has_many :product_brands, dependent: :destroy
+  has_many :brands, through: :product_brands
+  has_many :product_ingredients, dependent: :destroy
   has_many :ingredients, through: :product_ingredients
-  has_one :nutritional_info
+  has_many :nutrients, dependent: :destroy
 
   include PgSearch
 

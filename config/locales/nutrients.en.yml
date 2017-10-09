@@ -1,0 +1,10 @@
+en:
+  options:
+    nutrient_names:
+      energy: Energy
+      proteins: Protein
+      fat: Fat (Total)
+      carbohydrates: Carbohydrate
+      sugars: Sugars
+      fiber: Fiber
+      sodium: Sodium

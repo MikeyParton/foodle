@@ -1,3 +1,4 @@
 class Ingredient < ApplicationRecord
-  belongs_to :product_ingredient, required: false
+  has_many :product_ingredients
+  has_many :products, through: :product_ingredients
 end

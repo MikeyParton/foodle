@@ -8,10 +8,11 @@ module OpenFood
       self
     end
 
-    def barcode_search(code)
+    def product(code)
       uri = URI("https://world.openfoodfacts.org/api/v0/product/#{code}.json")
-      response = JSON.parse(@client.get(uri))
-      return { error: "Product not found" } if response["status"] == 0
+      response = @client.get(uri)
+      response = JSON.parse(response)
+      return nil if response["status"] == 0
       OpenFood::Product.new((response))
     end
   end
