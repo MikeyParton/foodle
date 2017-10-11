@@ -8,7 +8,7 @@ class ProductFinder
     product = Product.find_by(barcode: @barcode)
 
     unless product.present?
-      product = OpenFood::Client.new.product(@barcode)
+      product = OpenFood.new.scan(@barcode)
       product.save if product.present?
     end
     product

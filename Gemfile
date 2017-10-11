@@ -22,6 +22,7 @@ gem 'pg_search'
 gem 'enumerize'
 gem 'koala'
 gem 'openfoodfacts'
+gem 'ruby-units'
 
 group :development, :test do
   gem 'capybara', '~> 2.13'
