@@ -1,7 +1,5 @@
 module OpenFood
   class Product
-    include OpenFood::ProductPersistence
-
     attr_accessor :code, :product_name, :brands, :ingredients, :nutriments,
                   :categories_tags, :serving_size, :serving_size
 
@@ -37,7 +35,8 @@ module OpenFood
         fat: nutrient_param('fat'),
         sodium: nutrient_param('sodium'),
         fiber: nutrient_param('fiber'),
-        sugars: nutrient_param('sugars')
+        sugars: nutrient_param('sugars'),
+        source: 'open_food'
       }
     end
 

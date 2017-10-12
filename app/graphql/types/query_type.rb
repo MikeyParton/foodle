@@ -4,6 +4,7 @@ Types::QueryType = GraphQL::ObjectType.new.tap do |root_type|
   root_type.interfaces = []
   root_type.fields = Util::FieldCombiner.combine([
     Queries::ProductQuery,
-    Queries::IngredientQuery
+    Queries::IngredientQuery,
+    Queries::BrandQuery
   ])
 end

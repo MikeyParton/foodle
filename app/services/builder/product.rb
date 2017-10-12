@@ -14,10 +14,12 @@ module Builder
       @fiber = params[:fiber]
       @brands = params[:brands] || []
       @ingredients = params[:ingredients] || []
+      @source = params[:source] || "foodle"
+      self
     end
 
     def save
-      ActiveRecord::Base.Transaction do
+      ActiveRecord::Base.transaction do
         product = build_product
         build_brands(product)
         build_ingredients(product)
@@ -39,7 +41,8 @@ module Builder
         fat: Conversion.new(@fat, :weight).convert,
         sodium: Conversion.new(@sodium, :weight).convert,
         fiber: Conversion.new(@fiber, :weight).convert,
-        sugars: Conversion.new(@sugars, :weight).convert
+        sugars: Conversion.new(@sugars, :weight).convert,
+        source: @source
       )
     end
 
