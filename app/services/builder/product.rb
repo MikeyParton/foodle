@@ -1,5 +1,11 @@
 module Builder
   class Product
+    BASE_UNITS = {
+      volume: 'ul',
+      weight: 'mg',
+      energy: 'J'
+    }
+
     def initialize(params)
       @barcode = params[:barcode]
       @name = params[:name]
@@ -20,10 +26,11 @@ module Builder
 
     def save
       ActiveRecord::Base.transaction do
-        product = build_product
-        build_brands(product)
-        build_ingredients(product)
-        product
+        @product = build_product
+        build_brands
+        build_ingredients
+        build_nutrients
+        @product
       end
     end
 
@@ -33,35 +40,64 @@ module Builder
       ::Product.create(
         barcode: @barcode,
         name: @name,
-        serving: Conversion.new(@serving, serving_type).convert,
-        serving_weight: @serving_weight,
-        energy: Conversion.new(@energy, :energy).convert,
-        proteins: Conversion.new(@proteins, :weight).convert,
-        carbohydrates: Conversion.new(@carbohydrates, :weight).convert,
-        fat: Conversion.new(@fat, :weight).convert,
-        sodium: Conversion.new(@sodium, :weight).convert,
-        fiber: Conversion.new(@fiber, :weight).convert,
-        sugars: Conversion.new(@sugars, :weight).convert,
-        source: @source
+        serving_value: converted_serving.try(:scalar),
+        serving_unit: converted_serving.try(:units),
+        source: @source,
+        liquid: liquid?
       )
     end
 
-    def build_brands(product)
+    def converted_nutrients
+      {
+        energy: Conversion.new(@energy, BASE_UNITS[:energy]).convert,
+        proteins: Conversion.new(@proteins, BASE_UNITS[:weight]).convert,
+        carbohydrates: Conversion.new(@carbohydrates, BASE_UNITS[:weight]).convert,
+        fat: Conversion.new(@fat, BASE_UNITS[:weight]).convert,
+        sodium: Conversion.new(@sodium, BASE_UNITS[:weight]).convert,
+        fiber: Conversion.new(@fiber, BASE_UNITS[:weight]).convert,
+        sugars: Conversion.new(@sugars, BASE_UNITS[:weight]).convert
+      }
+    end
+
+    def build_brands
       built_brands = @brands.map do |name|
         ::Brand.find_or_create_by(name: name)
       end
-      product.brands << built_brands
+      @product.brands << built_brands
     end
 
-    def build_ingredients(product)
+    def build_ingredients
       built_ingredients = @ingredients.map do |name|
         ::Ingredient.find_or_create_by(name: name)
       end
-      product.ingredients << built_ingredients
+      @product.ingredients << built_ingredients
     end
 
-    def serving_type
-      @serving_weight ? :weight : :volume
+    def converted_serving
+      Conversion.new(@serving, serving_unit).convert
+    end
+
+    def build_nutrients
+      ::Nutrients.create(nutrient_params)
+    end
+
+    def nutrient_params
+      converted_nutrients.inject({ product: @product }) do |result, element|
+        name = element[0]
+        conversion = element[1]
+        result["#{name}_base_value".to_sym] = conversion.try(:scalar)
+        result["#{name}_base_unit".to_sym] = conversion.try(:units)
+        result
+      end
+    end
+
+    def liquid?
+      return nil unless @serving.present?
+      @serving =~ /g/ ? false : true
+    end
+
+    def serving_unit
+      liquid? ? BASE_UNITS[:volume] : BASE_UNITS[:weight]
     end
   end
 end

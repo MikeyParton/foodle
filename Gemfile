@@ -19,9 +19,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'graphql'
 gem 'graphiql-rails'
 gem 'pg_search'
-gem 'enumerize'
 gem 'koala'
-gem 'openfoodfacts'
 gem 'ruby-units'
 
 group :development, :test do

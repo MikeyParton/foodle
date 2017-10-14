@@ -28,7 +28,6 @@ module OpenFood
         brands: brands.split(','),
         ingredients: ingredients_params,
         serving: serving_size,
-        serving_weight: serving_weight,
         energy: nutrient_param('energy'),
         proteins: nutrient_param('proteins'),
         carbohydrates: nutrient_param('carbohydrates'),
@@ -49,11 +48,6 @@ module OpenFood
 
     def ingredients_params
       ingredients.map { |row| row['text'] }
-    end
-
-    def serving_weight
-      # serving size comes with units '30g'
-      serving_size =~ /g/i ? true : false
     end
   end
 end

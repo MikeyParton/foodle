@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171011091428) do
+ActiveRecord::Schema.define(version: 20171014123301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,10 +39,21 @@ ActiveRecord::Schema.define(version: 20171011091428) do
   end
 
   create_table "nutrients", force: :cascade do |t|
+    t.integer "energy_base_value"
+    t.string "energy_base_unit"
+    t.integer "proteins_base_value"
+    t.string "proteins_base_unit"
+    t.integer "carbohydrates_base_value"
+    t.string "carbohydrates_base_unit"
+    t.integer "fat_base_value"
+    t.string "fat_base_unit"
+    t.integer "sugars_base_value"
+    t.string "sugars_base_unit"
+    t.integer "fiber_base_value"
+    t.string "fiber_base_unit"
+    t.integer "sodium_base_value"
+    t.string "sodium_base_unit"
     t.bigint "product_id"
-    t.integer "name", default: 0, null: false
-    t.decimal "value", precision: 8, scale: 2
-    t.integer "unit", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_nutrients_on_product_id"
@@ -71,16 +82,10 @@ ActiveRecord::Schema.define(version: 20171011091428) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "barcode"
-    t.integer "energy"
-    t.integer "proteins"
-    t.integer "carbohydrates"
-    t.integer "fat"
-    t.integer "sugars"
-    t.integer "fiber"
-    t.integer "sodium"
-    t.integer "serving"
-    t.boolean "serving_weight", default: true
     t.integer "source", default: 0
+    t.boolean "liquid", default: false
+    t.integer "serving_value"
+    t.string "serving_unit"
   end
 
   create_table "users", force: :cascade do |t|

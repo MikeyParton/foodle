@@ -5,11 +5,14 @@ Queries::ProductQuery = GraphQL::ObjectType.define do
     type Types::ProductType
     description "A product"
     resolve -> (obj, args, ctx) {
+
       query = {
         id: args[:id],
         barcode: args[:barcode]
       }.compact
-      Product.find_by(query)
+
+      product = Product.find_by(query)
+      ProductView.new(product) if product.present?
     }
   end
 
