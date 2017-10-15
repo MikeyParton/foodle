@@ -1,27 +1,27 @@
 module Builder
   class Product
-    BASE_UNITS = {
-      volume: 'ul',
-      weight: 'mg',
-      energy: 'J'
-    }
+    BASE_UNITS = { volume: 'ul', weight: 'mg', energy: 'J' }
+    BASE_SERVING_VALUE = 100000 # save all nutrients as 100g values
 
     def initialize(params)
+      @params = params
       @barcode = params[:barcode]
       @name = params[:name]
       @serving = params[:serving]
-      @serving_weight = params[:serving_weight]
-      @energy = params[:energy]
-      @proteins = params[:proteins]
-      @carbohydrates = params[:carbohydrates]
-      @fat = params[:fat]
-      @sugars = params[:sugars]
-      @sodium = params[:sodium]
-      @fiber = params[:fiber]
+      @source = params[:source] || "foodle"
+
+      # associations
       @brands = params[:brands] || []
       @ingredients = params[:ingredients] || []
-      @source = params[:source] || "foodle"
-      self
+
+      # nutrient params
+      @energy = params.dig(:nutrients, :energy)
+      @proteins = params.dig(:nutrients, :proteins)
+      @carbohydrates = params.dig(:nutrients, :carbohydrates)
+      @fat = params.dig(:nutrients, :fat)
+      @sugars = params.dig(:nutrients, :sugars)
+      @sodium = params.dig(:nutrients, :sodium)
+      @fiber = params.dig(:nutrients, :fiber)
     end
 
     def save
@@ -40,8 +40,8 @@ module Builder
       ::Product.create(
         barcode: @barcode,
         name: @name,
-        serving_value: converted_serving.try(:scalar),
-        serving_unit: converted_serving.try(:units),
+        serving_value: converted_serving.value,
+        serving_unit: converted_serving.unit,
         source: @source,
         liquid: liquid?
       )
@@ -49,13 +49,13 @@ module Builder
 
     def converted_nutrients
       {
-        energy: Conversion.new(@energy, BASE_UNITS[:energy]).convert,
-        proteins: Conversion.new(@proteins, BASE_UNITS[:weight]).convert,
-        carbohydrates: Conversion.new(@carbohydrates, BASE_UNITS[:weight]).convert,
-        fat: Conversion.new(@fat, BASE_UNITS[:weight]).convert,
-        sodium: Conversion.new(@sodium, BASE_UNITS[:weight]).convert,
-        fiber: Conversion.new(@fiber, BASE_UNITS[:weight]).convert,
-        sugars: Conversion.new(@sugars, BASE_UNITS[:weight]).convert
+        energy: Conversion.new(@energy).convert_to(BASE_UNITS[:energy]),
+        proteins: Conversion.new(@proteins).convert_to(BASE_UNITS[:weight]),
+        carbohydrates: Conversion.new(@carbohydrates).convert_to(BASE_UNITS[:weight]),
+        fat: Conversion.new(@fat).convert_to(BASE_UNITS[:weight]),
+        sodium: Conversion.new(@sodium).convert_to(BASE_UNITS[:weight]),
+        fiber: Conversion.new(@fiber).convert_to(BASE_UNITS[:weight]),
+        sugars: Conversion.new(@sugars).convert_to(BASE_UNITS[:weight])
       }
     end
 
@@ -74,19 +74,27 @@ module Builder
     end
 
     def converted_serving
-      Conversion.new(@serving, serving_unit).convert
+      Conversion.new(@serving).convert_to(serving_unit)
     end
 
     def build_nutrients
-      ::Nutrients.create(nutrient_params)
+      ::Nutrients.create(nutrient_params.merge(
+        serving_value: 100000,
+        serving_unit: serving_unit
+      ))
     end
 
     def nutrient_params
       converted_nutrients.inject({ product: @product }) do |result, element|
         name = element[0]
         conversion = element[1]
-        result["#{name}_base_value".to_sym] = conversion.try(:scalar)
-        result["#{name}_base_unit".to_sym] = conversion.try(:units)
+
+        base_unit = conversion.unit
+        base_value = conversion.value
+        base_value /= nutrient_serving_factor if base_value.present?
+
+        result["#{name}_base_value".to_sym] = base_value
+        result["#{name}_base_unit".to_sym] = base_unit
         result
       end
     end
@@ -98,6 +106,13 @@ module Builder
 
     def serving_unit
       liquid? ? BASE_UNITS[:volume] : BASE_UNITS[:weight]
+    end
+
+    def nutrient_serving_factor
+      # calculate multiplication factor to convert nutrients to 100g values
+      string = @params.dig(:nutrients, :serving)
+      return nil unless string.present?
+      Conversion.new(string).how_many_in("#{BASE_SERVING_VALUE} #{serving_unit}")
     end
   end
 end

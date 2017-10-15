@@ -145,23 +145,31 @@ RSpec.describe Builder::Product do
     end
 
     describe 'creating nutrients and handling units' do
-      context 'given valid nutrient params' do
+      context 'given valid nutrient params for 100g' do
         let(:ingredient) { create(:ingredient) }
 
         let(:valid_params) {{
           name: 'product',
           barcode: '999999999999',
-          energy: '20 kJ',
-          proteins: '14 g',
-          carbohydrates: '15 g',
-          fat: '5 g',
-          sugars: '3 g',
-          fiber: '3 g',
-          sodium: '200 mg'
+          nutrients: {
+            serving: '100 g',
+            energy: '20 kJ',
+            proteins: '14 g',
+            carbohydrates: '15 g',
+            fat: '5 g',
+            sugars: '3 g',
+            fiber: '3 g',
+            sodium: '200 mg'
+          }
         }}
 
         let(:builder) { Builder::Product.new(valid_params) }
         let(:product) { builder.save }
+
+        it 'saves the nutrient serving as mg' do
+          expect(product.nutrients.serving_unit).to eq('mg')
+          expect(product.nutrients.serving_value).to eq(100000)
+        end
 
         it 'saves energy as J' do
           expect(product.nutrients.energy_base_value).to eq(20000)
@@ -195,6 +203,69 @@ RSpec.describe Builder::Product do
 
         it 'saves sodium as mg' do
           expect(product.nutrients.sodium_base_value).to eq(200)
+          expect(product.nutrients.sodium_base_unit).to eq('mg')
+        end
+      end
+
+
+      context 'given valid nutrient params for 100g' do
+        let(:ingredient) { create(:ingredient) }
+
+        let(:valid_params) {{
+          name: 'product',
+          barcode: '999999999999',
+          nutrients: {
+            serving: '10 g',
+            energy: '20 kJ',
+            proteins: '14 g',
+            carbohydrates: '15 g',
+            fat: '5 g',
+            sugars: '3 g',
+            fiber: '3 g',
+            sodium: '200 mg'
+          }
+        }}
+
+        let(:builder) { Builder::Product.new(valid_params) }
+        let(:product) { builder.save }
+
+        it 'saves and converts the nutrient serving as 100g' do
+          expect(product.nutrients.serving_unit).to eq('mg')
+          expect(product.nutrients.serving_value).to eq(100000)
+        end
+
+        it 'saves energy as J and converts it to 100g value' do
+          expect(product.nutrients.energy_base_value).to eq(200000)
+          expect(product.nutrients.energy_base_unit).to eq('J')
+        end
+
+        it 'saves proteins as mg' do
+          expect(product.nutrients.proteins_base_value).to eq(140000)
+          expect(product.nutrients.proteins_base_unit).to eq('mg')
+        end
+
+        it 'saves carbohydrates as mg' do
+          expect(product.nutrients.carbohydrates_base_value).to eq(150000)
+          expect(product.nutrients.carbohydrates_base_unit).to eq('mg')
+        end
+
+        it 'saves fat as mg' do
+          expect(product.nutrients.fat_base_value).to eq(50000)
+          expect(product.nutrients.fat_base_unit).to eq('mg')
+        end
+
+        it 'saves sugars as mg' do
+          expect(product.nutrients.sugars_base_value).to eq(30000)
+          expect(product.nutrients.sugars_base_unit).to eq('mg')
+        end
+
+        it 'saves fiber as mg' do
+          expect(product.nutrients.fiber_base_value).to eq(30000)
+          expect(product.nutrients.fiber_base_unit).to eq('mg')
+        end
+
+        it 'saves sodium as mg' do
+          expect(product.nutrients.sodium_base_value).to eq(2000)
           expect(product.nutrients.sodium_base_unit).to eq('mg')
         end
       end

@@ -14,6 +14,8 @@ FactoryGirl.define do
     fiber_base_unit           'mg'
     sodium_base_value         { rand(1000..10000) }
     sodium_base_unit          'mg'
+    serving_value             100000
+    serving_unit              'mg'
     product
   end
 end

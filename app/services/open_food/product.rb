@@ -12,7 +12,6 @@ module OpenFood
       @nutriments = product.fetch('nutriments', [])
       @categories_tags = product.fetch('categories_tags', [])
       @serving_size = product['serving_size']
-      self
     end
 
     def save
@@ -28,13 +27,16 @@ module OpenFood
         brands: brands.split(','),
         ingredients: ingredients_params,
         serving: serving_size,
-        energy: nutrient_param('energy'),
-        proteins: nutrient_param('proteins'),
-        carbohydrates: nutrient_param('carbohydrates'),
-        fat: nutrient_param('fat'),
-        sodium: nutrient_param('sodium'),
-        fiber: nutrient_param('fiber'),
-        sugars: nutrient_param('sugars'),
+        nutrients: {
+          serving: '100 g',
+          energy: nutrient_param('energy'),
+          proteins: nutrient_param('proteins'),
+          carbohydrates: nutrient_param('carbohydrates'),
+          fat: nutrient_param('fat'),
+          sodium: nutrient_param('sodium'),
+          fiber: nutrient_param('fiber'),
+          sugars: nutrient_param('sugars')
+        },
         source: 'open_food'
       }
     end
