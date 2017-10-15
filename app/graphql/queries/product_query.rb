@@ -12,7 +12,6 @@ Queries::ProductQuery = GraphQL::ObjectType.define do
       }.compact
 
       product = Product.find_by(query)
-      ProductView.new(product) if product.present?
     }
   end
 
