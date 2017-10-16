@@ -3,15 +3,13 @@ class ProductFinder
     @barcode = barcode
   end
 
-  def find
+  def process
     return nil unless valid_barcode?
     product = Product.find_by(barcode: @barcode)
-
-    unless product.present?
-      product = OpenFood::Client.new.scan(@barcode)
-      product.save if product.present?
-    end
-    product
+    return product if product.present?
+    openfood_product = OpenFood::Client.new.scan(@barcode)
+    return openfood_product.save if openfood_product.present?
+    nil
   end
 
   private
