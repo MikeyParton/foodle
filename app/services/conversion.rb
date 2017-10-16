@@ -1,6 +1,4 @@
 class Conversion
-  attr_reader :value, :unit
-
   def initialize(input)
     @input = input
   end
@@ -16,6 +14,8 @@ class Conversion
     other_unit = Unit.new(other_unit_string)
     Conversion.new(@input).convert_to(other_unit.units).value / other_unit.scalar
   end
+
+  private
 
   def nil_out
     OpenStruct.new(value: nil, unit: nil)
